@@ -4,8 +4,6 @@ Created on Thu Oct 22 14:06:43 2020
 
 @author: Luis Maurano
 """
-
-
 import glob
 import numpy as np
 from osgeo import gdal
@@ -42,12 +40,22 @@ driver = gdal.GetDriverByName('GTiff')
 
 # define caminho para dados
 current_directory = os.getcwd()
-infile = open(current_directory + "/set_path_dir.txt", "r")
-path = infile.readline().strip()
-infile.close()
+
+#verifica se arq existe
+if os.path.isfile(current_directory + "/set_path_dir.txt"):
+   infile = open(current_directory + "/set_path_dir.txt", "r")
+   path = infile.readline().strip() + "/"
+   infile.close()
+else:
+    print("set_path_dir.txt nao existe em ", current_directory)
+    exit()
+
+#verifica se diretorio existe
+if os.path.isdir(path) is False:
+    print("nao encontrou diretorio em ", path)
+    exit()
 
 dirtifs = path + "/LC09*SR*AI_N.TIF"
-
 
 tiffiles = []
 bands = []
@@ -121,7 +129,7 @@ saveResult (matriz,path,file_out,dataset,colunas,linhas,nbandas,data_type)
 matriz_evi =  2.5 * ((matriz_nir - matriz_red) / (matriz_nir + 6 * matriz_red - 7.5 * matriz_blue + 1 + 0.000000001))
 banda = matriz_evi
 matriz = filtra_reflectancia(banda, min, max)
-print("NDVI min/max: ",matriz_evi.min(),matriz_evi.max())
+print("EVI min/max: ",matriz_evi.min(),matriz_evi.max())
 file_out = tiff.replace('B7_AI_N.TIF','EVI_AI_N.TIF')
 saveResult (matriz,path,file_out,dataset,colunas,linhas,nbandas,data_type)
 

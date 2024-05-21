@@ -29,17 +29,26 @@ def saveResult (matriz,path,file_out,dataset,colunas,linhas,nbandas,data_type):
     # fechar datasets
     dataset_new = None
     dataset = None
-    
-    
 
 # definir driver da gdal
 driver = gdal.GetDriverByName('GTiff')
 
 # define caminho para dados
 current_directory = os.getcwd()
-infile = open(current_directory +"/set_path_dir.txt", "r")
-path = infile.readline().strip()
-infile.close()
+
+#verifica se arq existe
+if os.path.isfile(current_directory + "/set_path_dir.txt"):
+   infile = open(current_directory +"/set_path_dir.txt", "r")
+   path = infile.readline().strip() + "/"
+   infile.close()
+else:
+    print("set_path_dir.txt nao existe em ", current_directory)
+    exit()
+
+#verifica se diretorio existe
+if os.path.isdir(path) is False:
+    print("nao encontrou diretorio em ", path)
+    exit()
 
 dirtifs = path + "LC09*SR*_AI_N*.TIF"
 
@@ -80,8 +89,6 @@ for tiff in tiffiles:
     bands.append(aux)  
     bands[i]  = aux.ReadAsArray()
     bands[i]  = bands[i].astype(float)
-    
-    
     i += 1
    # dataset = None
     

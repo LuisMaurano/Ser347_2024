@@ -59,9 +59,20 @@ def calculate_cluster_values(image, clustered_image):
 
 # define caminho para dados
 current_directory = os.getcwd()
-infile = open(current_directory +"/set_path_dir.txt", "r")
-path = infile.readline().strip()
-infile.close()
+
+#verifica se arq existe
+if os.path.isfile(current_directory + "/set_path_dir.txt"):
+   infile = open(current_directory + "/set_path_dir.txt", "r")
+   path = infile.readline().strip() + "/"
+   infile.close()
+else:
+    print("set_path_dir.txt nao existe em ", current_directory)
+    exit()
+
+#verifica se diretorio existe
+if os.path.isdir(path) is False:
+    print("nao encontrou diretorio em ", path)
+    exit()
 
 file_path = path + "LC09_L2SP_226068_20230821_20230823_02_T1_SR_NDVI_AI_N.TIF"
 
