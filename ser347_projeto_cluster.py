@@ -1,3 +1,9 @@
+"""
+Created on Thu Oct 22 14:06:43 2020
+
+@author: Ricardo Cartaxo M Souza
+"""
+
 from osgeo import gdal,osr
 import numpy as np
 from sklearn.cluster import KMeans

@@ -2,7 +2,7 @@
 """
 Created on Thu Oct 22 14:06:43 2020
 
-@author: Luis Maurano
+@authors: Luis Maurano, Ana Júlia Dias, Andrés Velastegui-Montoya, Camila Totti, Marina Galdez
 """
 
 
