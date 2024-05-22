@@ -9,6 +9,7 @@ import glob
 import numpy as np
 from osgeo import gdal
 import os
+from check_dir import check
 
 # salva tiff processado no disco
 def saveResult (matriz,path,file_out,dataset,colunas,linhas,nbandas,data_type):
@@ -39,22 +40,8 @@ def filtra_reflectancia(banda, min, max):
 # definir driver da gdal
 driver = gdal.GetDriverByName('GTiff')
 
-# define caminho para dados
-current_directory = os.getcwd()
-
 #verifica se arq existe
-if os.path.isfile(current_directory + "/set_path_dir.txt"):
-   infile = open(current_directory + "/set_path_dir.txt", "r")
-   path = infile.readline().strip() + "/"
-   infile.close()
-else:
-    print("set_path_dir.txt nao existe em ", current_directory)
-    exit()
-
-#verifica se diretorio existe
-if os.path.isdir(path) is False:
-    print("nao encontrou diretorio em ", path)
-    exit()
+path = check()
 
 dirtifs = path + "LC09*SR*B*.TIF"
 

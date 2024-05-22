@@ -15,6 +15,7 @@ import cv2
 import skimage as ski
 from skimage import data, img_as_float
 from skimage import exposure
+from check_dir import check
 from skimage import io
 import matplotlib.pyplot as plt
 
@@ -46,18 +47,7 @@ driver = gdal.GetDriverByName('GTiff')
 current_directory = os.getcwd()
 
 #verifica se arq existe
-if os.path.isfile(current_directory + "/set_path_dir.txt"):
-   infile = open(current_directory +"/set_path_dir.txt", "r")
-   path = infile.readline().strip() + "/"
-   infile.close()
-else:
-    print("set_path_dir.txt nao existe em ", current_directory)
-    exit()
-
-#verifica se diretorio existe
-if os.path.isdir(path) is False:
-    print("nao encontrou diretorio em ", path)
-    exit()
+path = check()
 
 dirtifs = path + "MASC_*.TIF"
 
